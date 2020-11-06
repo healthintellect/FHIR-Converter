@@ -1,0 +1,107 @@
+service: rosetta
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  endpointType: regional
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  apiGateway:
+    shouldStartNameWithService: true
+  memorySize: 192
+  timeout: 6
+  logRetentionInDays: 14
+  tracing:
+    apiGateway: true
+    lambda: true
+  environment:
+    AWS_XRAY_CONTEXT_MISSING: LOG_ERROR
+    NODE_ENV: ${opt:stage, 'dev'}
+    LOG_LEVEL: 'info'
+  deploymentBucket:
+    name: ${self:provider.stage}-${self:provider.region}-rosetta-sls
+
+  # Update the following tags for this application
+  tags:
+    nse:app:name: lambda-${self:service}
+    nse:department:name: hl7cc-rosetta
+    nse:department:email: info@healthintellect.com
+    nse:app:domain: template
+    nse:billing:cost-center: 10010080
+    nse:app:runtime: ${self:provider.runtime}
+
+# Sample of permission for lambda->lambda
+#    - Effect: Allow
+#      Action:
+#        - lambda:InvokeFunction
+#      Resource: "arn:aws:lambda:${self:provider.region}:*:function:LambdaService-${self:provider.stage}-LambdaFunction"
+
+resources:
+  Resources:
+    ##############################################
+    ## Used for Enabling Metics on API Stage    ##
+    ##############################################
+    ApiGatewayStage:
+      Type: AWS::ApiGateway::Stage
+      Properties:
+        DeploymentId:
+          Ref: __deployment__ # provided by serverless-plugin-bind-deployment-id
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        StageName: ${self:provider.stage}
+        MethodSettings:
+          - HttpMethod: '*'
+            LoggingLevel: INFO
+            MetricsEnabled: true
+            ResourcePath: '/*'
+functions:
+  app:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+
+custom:
+  serverless-offline:
+    httpPort: 4001
+
+  ###Used for Assigning Function to Custom API Domain
+  customDomain:
+    basePath: ''
+    domainName: rosetta.hl7.cc
+    certificateName: 'hl7.cc'
+    stage: ${self:provider.stage}
+    endpointType: 'regional'
+    createRoute53Record: true
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-tracing
+  - serverless-domain-manager
+  - serverless-plugin-bind-deployment-id
+  - serverless-pseudo-parameters
+
+package:
+  exclude:
+    - .idea/**
+    - .nyc_output/**
+    - '*.iml'
+    - buildspec.yml
+    - coverage/**
+    - LICENSE
+    - mochawesome-report/**
+    - qa-dashboard.sh
+    - CHANGELOG.md
+    - README.md
+    - README-sample.md
+    - ABOUT.md
+    - swagger.yml
+    - template.yml
+    - test/**
+    - test-report.xml

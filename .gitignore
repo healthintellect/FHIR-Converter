@@ -68,3 +68,8 @@ typings/
 # app runtime data
 service-templates
 tmp/
+
+config.js
+
+# Serverless directories
+.serverless
