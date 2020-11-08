@@ -4,9 +4,10 @@
   "description": "FHIR converter",
   "main": "src/index.js",
   "engines": {
-    "node": ">=10.10.0 <11.0"
+    "node": ">=10.10.0 <15.0"
   },
   "scripts": {
+    "dev": "sls offline --httpPort=2019",
     "test": "nyc node --experimental-worker node_modules/mocha/bin/_mocha --reporter-options configFile=mocha.config.json --exit",
     "build": "npm install",
     "pretest": "node --experimental-worker src/init-service.js",
@@ -107,6 +108,7 @@
     "body-parser": "^1.19.0",
     "codemirror": "^5.46.0",
     "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
     "deepmerge": "^4.2.2",
     "express": "^4.16.4",
     "fhir": "^4.7.9",
@@ -115,9 +117,10 @@
     "lodash": "^4.17.19",
     "memory-cache": "^0.2.0",
     "ncp": "^2.0.0",
-    "nodegit": "^0.24.3",
+    "nodegit": "^0.27.0",
     "promise": "^8.0.3",
     "pushover-giting": "0.0.3",
+    "serverless-http": "^2.6.0",
     "swagger-jsdoc": "^3.2.9",
     "swagger-ui-express": "^4.0.2",
     "underscore": "^1.9.1",

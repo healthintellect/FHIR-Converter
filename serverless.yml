@@ -2,7 +2,7 @@ service: rosetta
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs12.x
   endpointType: regional
   region: ${opt:region, 'us-east-1'}
   stage: ${opt:stage, 'dev'}
