@@ -61,15 +61,23 @@ functions:
       - http:
           path: /
           method: ANY
-          cors: true
+          cors:
+            origins:
+              - 'http://localhost:3000'
+              - 'https://master.d3e3pao7vhudul.amplifyapp.com'
+              - 'https://hl7.cc'
       - http:
           path: /{proxy+}
           method: ANY
-          cors: true
+          cors:
+            origins:
+              - 'http://localhost:3000'
+              - 'https://master.d3e3pao7vhudul.amplifyapp.com'
+              - 'https://hl7.cc'
 
 custom:
   serverless-offline:
-    httpPort: 4001
+    httpPort: 2019
 
   ###Used for Assigning Function to Custom API Domain
   customDomain:
