@@ -62,18 +62,32 @@ functions:
           path: /
           method: ANY
           cors:
-            origins:
-              - 'http://localhost:3000'
-              - 'https://master.d3e3pao7vhudul.amplifyapp.com'
-              - 'https://hl7.cc'
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - client_id
+              - client_secret
+              - newrelic
       - http:
           path: /{proxy+}
           method: ANY
           cors:
-            origins:
-              - 'http://localhost:3000'
-              - 'https://master.d3e3pao7vhudul.amplifyapp.com'
-              - 'https://hl7.cc'
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - client_id
+              - client_secret
+              - newrelic
 
 custom:
   serverless-offline:

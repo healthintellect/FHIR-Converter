@@ -36,11 +36,7 @@ module.exports = function (app) {
   messageCache.init();
   app.use(
     cors({
-      origin: [
-        'http://localhost:3000',
-        'https://hl7.cc',
-        'https://master.d3e3pao7vhudul.amplifyapp.com',
-      ],
+      origin: '*',
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     })
   );
