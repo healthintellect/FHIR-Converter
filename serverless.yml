@@ -73,6 +73,7 @@ functions:
               - client_id
               - client_secret
               - newrelic
+              - Access-Control-Allow-Origin
       - http:
           path: /{proxy+}
           method: ANY
@@ -88,6 +89,7 @@ functions:
               - client_id
               - client_secret
               - newrelic
+              - Access-Control-Allow-Origin
 
 custom:
   serverless-offline:

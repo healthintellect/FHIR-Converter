@@ -36,10 +36,17 @@ module.exports = function (app) {
   messageCache.init();
   app.use(
     cors({
-      origin: '*',
-      optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+      credentials: true,
     })
   );
+  app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept'
+    );
+    next();
+  });
   app.use(bodyParser.json({ limit: '50mb', extended: true }));
   app.use(bodyParser.text({ limit: '50mb', extended: true }));
   app.use(express.static(constants.STATIC_LOCATION));
@@ -821,8 +828,20 @@ module.exports = function (app) {
         if (!retInvalidAcces) {
           delete resultMessage['invalidAccess'];
         }
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header(
+          'Access-Control-Allow-Headers',
+          'Origin, X-Requested-With, Content-Type, Accept'
+        );
         res.status(result.status);
-        res.json(resultMessage);
+        res.json({
+          statusCode: 200,
+          headers: {
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': '*',
+          },
+          body: JSON.stringify(resultMessage),
+        });
         return;
       });
   });

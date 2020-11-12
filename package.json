@@ -7,7 +7,7 @@
     "node": ">=10.10.0 <15.0"
   },
   "scripts": {
-    "dev": "sls offline --httpPort=2019",
+    "dev": "sls offline --httpPort=2019 --lambdaPort 3003",
     "test": "nyc node --experimental-worker node_modules/mocha/bin/_mocha --reporter-options configFile=mocha.config.json --exit",
     "build": "npm install",
     "pretest": "node --experimental-worker src/init-service.js",
