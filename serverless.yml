@@ -8,7 +8,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   apiGateway:
     shouldStartNameWithService: true
-  memorySize: 192
+  memorySize: 512
   timeout: 6
   logRetentionInDays: 14
   tracing:
@@ -23,12 +23,11 @@ provider:
 
   # Update the following tags for this application
   tags:
-    nse:app:name: lambda-${self:service}
-    nse:department:name: hl7cc-rosetta
-    nse:department:email: info@healthintellect.com
-    nse:app:domain: template
-    nse:billing:cost-center: 10010080
-    nse:app:runtime: ${self:provider.runtime}
+    hi:app:name: lambda-${self:service}
+    hi:department:name: hl7cc-rosetta
+    hi:department:email: info@healthintellect.com
+    hi:app:domain: template
+    hi:app:runtime: ${self:provider.runtime}
 
 # Sample of permission for lambda->lambda
 #    - Effect: Allow
@@ -54,42 +53,19 @@ resources:
             LoggingLevel: INFO
             MetricsEnabled: true
             ResourcePath: '/*'
+
 functions:
   app:
     handler: src/index.handler
     events:
       - http:
+          method: ANY
           path: /
-          method: ANY
-          cors:
-            origin: '*'
-            headers:
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-              - X-Amz-User-Agent
-              - client_id
-              - client_secret
-              - newrelic
-              - Access-Control-Allow-Origin
+          cors: true
       - http:
-          path: /{proxy+}
           method: ANY
-          cors:
-            origin: '*'
-            headers:
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-              - X-Amz-User-Agent
-              - client_id
-              - client_secret
-              - newrelic
-              - Access-Control-Allow-Origin
+          path: /{proxy+}
+          cors: true
 
 custom:
   serverless-offline:

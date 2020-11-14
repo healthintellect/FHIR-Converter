@@ -16,7 +16,6 @@ var fse = require('fs-extra');
 // );
 var path = require('path');
 var bodyParser = require('body-parser');
-const cors = require('cors');
 var swaggerUi = require('swagger-ui-express');
 var swaggerJSDoc = require('swagger-jsdoc');
 var WorkerPool = require('./lib/workers/workerPool');
@@ -34,17 +33,13 @@ module.exports = function (app) {
   templateCache.init();
   let messageCache = new fileSystemCache(constants.SAMPLE_DATA_LOCATION);
   messageCache.init();
-  app.use(
-    cors({
-      credentials: true,
-    })
-  );
   app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
       'Access-Control-Allow-Headers',
       'Origin, X-Requested-With, Content-Type, Accept'
     );
+    res.header('Access-Control-Allow-Credentials', true);
     next();
   });
   app.use(bodyParser.json({ limit: '50mb', extended: true }));
@@ -225,108 +220,108 @@ module.exports = function (app) {
       });
   });
 
-  /**
-   * @swagger
-   * /api/templates/git/status:
-   *   get:
-   *     description: Lists uncommitted changes
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: code
-   *         in: query
-   *         description: 'API key'
-   *         required: false
-   *         type: string
-   *       - name: X-MS-CONVERSION-API-KEY
-   *         in: header
-   *         description: 'API key'
-   *         required: false
-   *         type: string
-   *     responses:
-   *       200:
-   *         description: Current list of changes
-   *       401:
-   *         description: Unauthorized
-   */
+  // /**
+  //  * @swagger
+  //  * /api/templates/git/status:
+  //  *   get:
+  //  *     description: Lists uncommitted changes
+  //  *     produces:
+  //  *       - application/json
+  //  *     parameters:
+  //  *       - name: code
+  //  *         in: query
+  //  *         description: 'API key'
+  //  *         required: false
+  //  *         type: string
+  //  *       - name: X-MS-CONVERSION-API-KEY
+  //  *         in: header
+  //  *         description: 'API key'
+  //  *         required: false
+  //  *         type: string
+  //  *     responses:
+  //  *       200:
+  //  *         description: Current list of changes
+  //  *       401:
+  //  *         description: Unauthorized
+  //  */
   // app.get('/api/templates/git/status', function (req, res) {
   //     gfs.getStatus().then(function (status) {
   //         res.json(status);
   //     });
   // });
 
-  /**
-   * @swagger
-   * /api/templates/git/branches:
-   *   get:
-   *     description: Lists of branches
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: code
-   *         in: query
-   *         description: 'API key'
-   *         required: false
-   *         type: string
-   *       - name: X-MS-CONVERSION-API-KEY
-   *         in: header
-   *         description: 'API key'
-   *         required: false
-   *         type: string
-   *     responses:
-   *       200:
-   *         description: List of branches
-   *       401:
-   *         description: Unauthorized
-   */
+  // /**
+  //  * @swagger
+  //  * /api/templates/git/branches:
+  //  *   get:
+  //  *     description: Lists of branches
+  //  *     produces:
+  //  *       - application/json
+  //  *     parameters:
+  //  *       - name: code
+  //  *         in: query
+  //  *         description: 'API key'
+  //  *         required: false
+  //  *         type: string
+  //  *       - name: X-MS-CONVERSION-API-KEY
+  //  *         in: header
+  //  *         description: 'API key'
+  //  *         required: false
+  //  *         type: string
+  //  *     responses:
+  //  *       200:
+  //  *         description: List of branches
+  //  *       401:
+  //  *         description: Unauthorized
+  //  */
   // app.get('/api/templates/git/branches', function (req, res) {
   //     gfs.getBranches().then(function (branches) {
   //         res.json(branches);
   //     });
   // });
 
-  /**
-   * @swagger
-   * /api/templates/git/branches:
-   *   post:
-   *     description: Create new branch (from head)
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: code
-   *         in: query
-   *         description: 'API key'
-   *         required: false
-   *         type: string
-   *       - name: X-MS-CONVERSION-API-KEY
-   *         in: header
-   *         description: 'API key'
-   *         required: false
-   *         type: string
-   *       - name: branch
-   *         in: body
-   *         required: true
-   *         schema:
-   *           type: object
-   *           properties:
-   *             name:
-   *               description: Branch name
-   *               type: string
-   *             baseBranch:
-   *               description: Base branch name
-   *               type: string
-   *           required:
-   *             - name
-   *     responses:
-   *       201:
-   *         description: Created
-   *       400:
-   *         description: Bad request
-   *       401:
-   *         description: Unauthorized
-   *       409:
-   *         description: Conflict (unable to create branch)
-   */
+  // /**
+  //  * @swagger
+  //  * /api/templates/git/branches:
+  //  *   post:
+  //  *     description: Create new branch (from head)
+  //  *     produces:
+  //  *       - application/json
+  //  *     parameters:
+  //  *       - name: code
+  //  *         in: query
+  //  *         description: 'API key'
+  //  *         required: false
+  //  *         type: string
+  //  *       - name: X-MS-CONVERSION-API-KEY
+  //  *         in: header
+  //  *         description: 'API key'
+  //  *         required: false
+  //  *         type: string
+  //  *       - name: branch
+  //  *         in: body
+  //  *         required: true
+  //  *         schema:
+  //  *           type: object
+  //  *           properties:
+  //  *             name:
+  //  *               description: Branch name
+  //  *               type: string
+  //  *             baseBranch:
+  //  *               description: Base branch name
+  //  *               type: string
+  //  *           required:
+  //  *             - name
+  //  *     responses:
+  //  *       201:
+  //  *         description: Created
+  //  *       400:
+  //  *         description: Bad request
+  //  *       401:
+  //  *         description: Unauthorized
+  //  *       409:
+  //  *         description: Conflict (unable to create branch)
+  //  */
   // app.post('/api/templates/git/branches', function (req, res) {
   //     if (!req.body.name) {
   //         res.status(400);
@@ -350,45 +345,45 @@ module.exports = function (app) {
   //     }
   // });
 
-  /**
-   * @swagger
-   * /api/templates/git/checkout:
-   *   post:
-   *     description: Checkout branch
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: code
-   *         in: query
-   *         description: 'API key'
-   *         required: false
-   *         type: string
-   *       - name: X-MS-CONVERSION-API-KEY
-   *         in: header
-   *         description: 'API key'
-   *         required: false
-   *         type: string
-   *       - name: branch
-   *         in: body
-   *         required: true
-   *         schema:
-   *           type: object
-   *           properties:
-   *             name:
-   *               description: Branch name
-   *               type: string
-   *           required:
-   *             - name
-   *     responses:
-   *       200:
-   *         description: OK
-   *       400:
-   *         description: Bad Request
-   *       401:
-   *         description: Unauthorized
-   *       404:
-   *         description: Branch not found
-   */
+  // /**
+  //  * @swagger
+  //  * /api/templates/git/checkout:
+  //  *   post:
+  //  *     description: Checkout branch
+  //  *     produces:
+  //  *       - application/json
+  //  *     parameters:
+  //  *       - name: code
+  //  *         in: query
+  //  *         description: 'API key'
+  //  *         required: false
+  //  *         type: string
+  //  *       - name: X-MS-CONVERSION-API-KEY
+  //  *         in: header
+  //  *         description: 'API key'
+  //  *         required: false
+  //  *         type: string
+  //  *       - name: branch
+  //  *         in: body
+  //  *         required: true
+  //  *         schema:
+  //  *           type: object
+  //  *           properties:
+  //  *             name:
+  //  *               description: Branch name
+  //  *               type: string
+  //  *           required:
+  //  *             - name
+  //  *     responses:
+  //  *       200:
+  //  *         description: OK
+  //  *       400:
+  //  *         description: Bad Request
+  //  *       401:
+  //  *         description: Unauthorized
+  //  *       404:
+  //  *         description: Branch not found
+  //  */
   // app.post('/api/templates/git/checkout', function (req, res) {
   //     if (!req.body.name) {
   //         res.status(400);
@@ -427,47 +422,47 @@ module.exports = function (app) {
   //     }
   // });
 
-  /**
-   * @swagger
-   * /api/templates/git/commit:
-   *   post:
-   *     description: Commit ALL changes
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: code
-   *         in: query
-   *         description: 'API key'
-   *         required: false
-   *         type: string
-   *       - name: X-MS-CONVERSION-API-KEY
-   *         in: header
-   *         description: 'API key'
-   *         required: false
-   *         type: string
-   *       - name: commit
-   *         in: body
-   *         required: false
-   *         schema:
-   *           type: object
-   *           properties:
-   *             message:
-   *               description: Commit message
-   *               type: string
-   *             name:
-   *               description: Committers name
-   *               type: string
-   *             email:
-   *               description: Committers email
-   *               type: string
-   *     responses:
-   *       200:
-   *         description: Changes committed
-   *       401:
-   *         description: Unauthorized
-   *       409:
-   *         description: Conflict (no changes to commit)
-   */
+  // /**
+  //  * @swagger
+  //  * /api/templates/git/commit:
+  //  *   post:
+  //  *     description: Commit ALL changes
+  //  *     produces:
+  //  *       - application/json
+  //  *     parameters:
+  //  *       - name: code
+  //  *         in: query
+  //  *         description: 'API key'
+  //  *         required: false
+  //  *         type: string
+  //  *       - name: X-MS-CONVERSION-API-KEY
+  //  *         in: header
+  //  *         description: 'API key'
+  //  *         required: false
+  //  *         type: string
+  //  *       - name: commit
+  //  *         in: body
+  //  *         required: false
+  //  *         schema:
+  //  *           type: object
+  //  *           properties:
+  //  *             message:
+  //  *               description: Commit message
+  //  *               type: string
+  //  *             name:
+  //  *               description: Committers name
+  //  *               type: string
+  //  *             email:
+  //  *               description: Committers email
+  //  *               type: string
+  //  *     responses:
+  //  *       200:
+  //  *         description: Changes committed
+  //  *       401:
+  //  *         description: Unauthorized
+  //  *       409:
+  //  *         description: Conflict (no changes to commit)
+  //  */
   // app.post('/api/templates/git/commit', function (req, res) {
   //     gfs.getStatus().then(function (status) {
   //         if (status.length > 0) {
@@ -833,16 +828,31 @@ module.exports = function (app) {
           'Access-Control-Allow-Headers',
           'Origin, X-Requested-With, Content-Type, Accept'
         );
+        res.header('Access-Control-Allow-Credentials', true);
         res.status(result.status);
-        res.json({
-          statusCode: 200,
-          headers: {
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Allow-Origin': '*',
-          },
-          body: JSON.stringify(resultMessage),
-        });
+        res.json(resultMessage);
         return;
+      })
+      .catch((err) => {
+        console.error(
+          `Failed to convert ${req.params.srcDataType} message: `,
+          err
+        );
+
+        res.status(500);
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header(
+          'Access-Control-Allow-Headers',
+          'Origin, X-Requested-With, Content-Type, Accept'
+        );
+        res.header('Access-Control-Allow-Credentials', true);
+        res.json({
+          error: err,
+          message:
+            `Failed to convert ${req.params.srcDataType} message: ` +
+            err.message,
+          ok: false,
+        });
       });
   });
 
