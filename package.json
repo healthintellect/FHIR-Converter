@@ -15,7 +15,8 @@
     "prestart": "node --experimental-worker src/init-service.js",
     "start": "node --experimental-worker src/index.js",
     "eslint": "eslint {src,test}/**/*.js",
-    "deploy": "serverless deploy --stage=prod"
+    "deploy:prod": "serverless deploy --stage=prod",
+    "deploy:dev": "serverless deploy --stage=dev"
   },
   "eslintConfig": {
     "env": {
@@ -90,11 +91,11 @@
     "mocha-junit-reporter": "^1.23.0",
     "mocha-multi-reporters": "^1.1.7",
     "nyc": "^14.1.1",
-    "serverless": "^2.9.0",
-    "serverless-domain-manager": "3.3.2",
-    "serverless-newrelic-lambda-layers": "0.1.18",
+    "serverless": "^2.20.1",
+    "serverless-domain-manager": "5.1.0",
+    "serverless-newrelic-lambda-layers": "1.0.0",
     "serverless-offline": "^6.8.0",
-    "serverless-plugin-bind-deployment-id": "1.2.0",
+    "serverless-plugin-bind-deployment-id": "2.0.2",
     "serverless-plugin-tracing": "2.0.0",
     "serverless-prune-plugin": "1.4.3",
     "serverless-pseudo-parameters": "2.5.0",
@@ -111,7 +112,7 @@
     "cors": "^2.8.5",
     "deepmerge": "^4.2.2",
     "express": "^4.16.4",
-    "fhir": "^4.7.9",
+    "fhir": "^4.8.2",
     "fs-extra": "^8.1.0",
     "handlebars": "^4.7.6",
     "lodash": "^4.17.19",

@@ -59,13 +59,80 @@ functions:
     handler: src/index.handler
     events:
       - http:
-          method: ANY
-          path: /
-          cors: true
+          method: GET
+          path: /api-docs
+          cors: false
+          private: false
       - http:
-          method: ANY
-          path: /{proxy+}
+          method: GET
+          path: /api-docs/swagger-ui.css
+          cors: false
+          private: false
+      - http:
+          method: GET
+          path: /api-docs/swagger-ui-bundle.js
+          cors: false
+          private: false
+      - http:
+          method: GET
+          path: /api-docs/swagger-ui-standalone-preset.js
+          cors: false
+          private: false
+      - http:
+          method: GET
+          path: /api-docs/swagger-ui-init.js
+          cors: false
+          private: false
+      - http:
+          method: GET
+          path: /api/helpers
           cors: true
+          private: true
+      - http:
+          method: GET
+          path: /api/sample-data
+          cors: true
+          private: true
+      - http:
+          method: GET
+          path: /api/sample-data/{srcDataType}/{file}
+          cors: true
+          private: true
+      - http:
+          method: GET
+          path: /api/templates
+          cors: true
+          private: true
+      - http:
+          method: GET
+          path: /api/templates/{srcDataType}/{file}
+          cors: true
+          private: true
+      - http:
+          method: PUT
+          path: /api/templates/{srcDataType}/{file}
+          cors: true
+          private: true
+      - http:
+          method: DELETE
+          path: /api/templates/{srcDataType}/{file}
+          cors: true
+          private: true
+      - http:
+          method: POST
+          path: /api/UpdateBaseTemplates
+          cors: true
+          private: true
+      - http:
+          method: POST
+          path: /api/convert/{srcDataType}
+          cors: true
+          private: true
+      - http:
+          method: POST
+          path: /api/convert/{srcDataType}/{template}
+          cors: true
+          private: true
 
 custom:
   serverless-offline:
@@ -73,7 +140,6 @@ custom:
 
   ###Used for Assigning Function to Custom API Domain
   customDomain:
-    basePath: ''
     domainName: rosetta.hl7.cc
     certificateName: 'hl7.cc'
     stage: ${self:provider.stage}
